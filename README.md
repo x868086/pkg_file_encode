@@ -90,7 +90,8 @@ $ pkg index.js
 将node-v18.15.0-win-x64文件改名为<font style="color:red;font-weight:bold">fetched-v18.15.0-win-x64</font>放到.pkg-cache -> v3.4这个文件夹下 (这里示例的版本是v18.15.0，实际情况需要根据编译时的错误提示下载对应的具体版本)
 ![rename file](./rename-file.png)
 注意这里你下载的是win系统，打包就会生成exe win系统的执行文件，其他系统要用，就下载其他系统的二进制文件；（下载那个就会打包那种系统的！）
-1. js和静态文件的处理方法
+
+6. js和静态文件的处理方法
 pkg打包会从入口开始根据依赖去找相关资源，并把这些都打包进去，不过直接打包这种情况仅限于require引用方式，如果项目代码中有用到__dirname拼接变量的形式，就要在packge.json中进行配置
 如：项目中通过__dirname来读取views和public的文件
 ```js
@@ -109,7 +110,8 @@ app.use(express.static(path.join(__dirname, './public')));
 ```
 assets：表示静态资源相关配置，像public/**/* 这种通配符写法，表示public下所有文件都被打包进去了;
 scritps：表示需要配置才能打包的js脚本
-7.缺少文件，静态文件读取失败 的处理方法
+
+7. 缺少文件，静态文件读取失败 的处理方法
 pkg只识别require,__dirname、__filename和process.cwd加载的文件，
 如果代码中使用__dirname和__filename 动态拼接的写法，必须要在assets中配置拼接的目录
 process.cwd读取外部文件，比如项目有数据库文件，需要读取，把数据库文件和打包的exe文件放在一起，通过process.cwd来读取
