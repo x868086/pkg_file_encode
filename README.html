@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>pkg&#x6253;&#x5305;nodejs&#x5e94;&#x7528;&#x6b65;&#x9aa4;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="pkg打包nodejs应用步骤">pkg打包nodejs应用步骤</h1>
+<h3 id="完整安装nodejs">完整安装Nodejs</h3>
+<p>完整安装node-v18.15.0-x64.msi，选择完整安装，安装同时勾选 安装c++编译模块的构建工具。构建工具是因为一些npm模块需要使用C/C++编译，如果想要编译这些模块，则需要安装这个工具。如果不安装这个构建工具，在之后使用 npm 安装模块的时候，会报错。
+<img src="file:////nodejs_install.png" alt="nodejs编译构建工具"></p>
+<h3 id="全局安装pkg">全局安装pkg</h3>
+<pre><code class="language-js">npm install pkg -g
+</code></pre>
+<h3 id="修改nodejs应用下的packagejson文件">修改nodejs应用下的package.json文件</h3>
+<pre><code class="language-js">{
+  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;123&quot;</span>,
+  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,
+  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;index.js&quot;</span>,
+  <span class="hljs-string">&quot;scripts&quot;</span>: {
+    <span class="hljs-string">&quot;test&quot;</span>: <span class="hljs-string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>
+  },
+  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;ISC&quot;</span>,
+  <span class="hljs-string">&quot;dependencies&quot;</span>: {
+    <span class="hljs-string">&quot;chalk&quot;</span>: <span class="hljs-string">&quot;^2.4.2&quot;</span>,
+    <span class="hljs-string">&quot;csv-parser&quot;</span>: <span class="hljs-string">&quot;^3.0.0&quot;</span>,
+    <span class="hljs-string">&quot;detect-file-encoding-and-language&quot;</span>: <span class="hljs-string">&quot;^2.4.0&quot;</span>,
+    <span class="hljs-string">&quot;exceljs&quot;</span>: <span class="hljs-string">&quot;^4.4.0&quot;</span>,
+    <span class="hljs-string">&quot;fast-csv&quot;</span>: <span class="hljs-string">&quot;^5.0.0&quot;</span>,
+    <span class="hljs-string">&quot;iconv-lite&quot;</span>: <span class="hljs-string">&quot;^0.6.3&quot;</span>,
+    <span class="hljs-string">&quot;inquirer&quot;</span>: <span class="hljs-string">&quot;^5.0.0&quot;</span>,
+    <span class="hljs-string">&quot;ora&quot;</span>: <span class="hljs-string">&quot;^5.4.1&quot;</span>
+  },
+  <span class="hljs-string">&quot;bin&quot;</span>:<span class="hljs-string">&quot;app.js&quot;</span>,
+  <span class="hljs-string">&quot;pkg&quot;</span>:{
+    <span class="hljs-string">&quot;outputPath&quot;</span>:<span class="hljs-string">&quot;executables&quot;</span>,
+    <span class="hljs-string">&quot;targets&quot;</span>:[
+      <span class="hljs-string">&quot;node18-win-x64&quot;</span>
+    ]
+  }
+}
+
+</code></pre>
+<p>bin: pkg打包入口
+outputPath: 输出应用路径
+targets: 编译目标平台</p>
+<h3 id="首次编译尝试">首次编译尝试</h3>
+<p>在nodejs应用路径下执行 <strong>pkg .</strong> 运行打包过程，执行<strong>pkg .</strong> 或者<strong>pkg package.json</strong>命令。如果有错误提示，查看错误提示需要使用的编译组件是哪个版本的node-vx.x.x-win-x64，比如这里是需要加载node-v18.5.0-win-x64 组件</p>
+<h3 id="下载编译组件">下载编译组件</h3>
+<p>登录<a href="https://github.com/vercel/pkg-fetch/releases">https://github.com/vercel/pkg-fetch/releases</a>    在页面上的v3.4更新日志记录中找到Assets链接，点开下面折叠的各版本组件，node-v18.5.0-win-x64，下载后重命名为fetched-v18.5.0-win-x64</p>
+<h3 id="拷贝编译组件到pkg-cache目录">拷贝编译组件到pkg-cache目录</h3>
+<p>在pkg缓存目录中新建v3.4文件夹 C:\Users\Administrator.pkg-cache\v3.4 并将fetched-v18.5.0-win-x64拷贝到v3.4目录下</p>
+<h3 id="再次编译">再次编译</h3>
+<p>重新执行pkg .或者pkg package.json命令进行打包</p>
+<h3 id="pkg打包nodejs应用的一些坑">pkg打包nodejs应用的一些坑</h3>
+<ol>
+<li>项目中不要使用esmodule规范导入模块，改用commonjs规范</li>
+<li>项目中不要使用各平台不一致的库，比如v8 模块</li>
+<li>项目中如果使用path.join方法拼接__dirname或__filename路径，拼接中的变量如果在其他目录中，就必须在package.json中配置pkg的&quot;asset&quot;s:[]配置项，以指定无法被自动打包的路径。建议使用process.cwd()拼接</li>
+<li>如果打包出来的应用闪退，可以在命令行中调用该应用，在命令行中可以看见错误信息</li>
+</ol>
+
+            
+            
+        </body>
+        </html>
